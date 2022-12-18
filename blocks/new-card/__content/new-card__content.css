@@ -1,0 +1,10 @@
+.new-card__content {
+  width: 430px;
+  min-height: 330px;
+  padding: 36px;
+  border-radius: 10px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}

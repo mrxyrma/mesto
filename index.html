@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./index.css">
+  <title>Mesto</title>
+</head>
+
+<body class="body">
+  <div class="container">
+    <header class="header">
+      <img class="logo" src="./images/logo/logo.svg" alt="Логотип Mesto">
+    </header>
+    <main class="content">
+
+      <section class="profile content__profile">
+        <div class="profile__user">
+          <img class="profile__avatar" src="./images/img/cousteau.jpg" alt="Жак-Ив Кусто">
+          <div class="profile__info">
+            <h1 class="profile__title">Жак-Ив Кусто</h1>
+            <button class="profile__edit"></button>
+            <p class="profile__description">Исследователь океана</p>
+          </div>
+        </div>
+        <button class="pofile__add"></button>
+      </section>
+      
+      <section class="places">
+        <ul class="cards places__cards">
+          <!-- <li class="cards__item">
+            <img class="cards__image" src="./images/img/carach.jpg" alt="Карачаевск">
+            <div class="cards__descr">
+              <h2 class="cards__title">Карачаевск</h2>
+              <button class="cards__like"></button>
+            </div>
+            <button class="cards__delete-item"></button>
+          </li>
+          <li class="cards__item">
+            <img class="cards__image" src="./images/img/elbrus.jpg" alt="Гора Эльбрус">
+            <div class="cards__descr">
+              <h2 class="cards__title">Гора Эльбрус</h2>
+              <button class="cards__like"></button>
+              <button class="cards__delete-item"></button>
+            </div>
+          </li>
+          <li class="cards__item">
+            <img class="cards__image" src="./images/img/dombay.jpg" alt="Домбай">
+            <div class="cards__descr">
+              <h2 class="cards__title">Домбай</h2>
+              <button class="cards__like"></button>
+              <button class="cards__delete-item"></button>
+            </div>
+          </li>
+          <li class="cards__item">
+            <img class="cards__image" src="./images/img/elbrus.jpg" alt="Гора Эльбрус">
+            <div class="cards__descr">
+              <h2 class="cards__title">Гора Эльбрус</h2>
+              <button class="cards__like"></button>
+              <button class="cards__delete-item"></button>
+            </div>
+          </li>
+          <li class="cards__item">
+            <img class="cards__image" src="./images/img/dombay.jpg" alt="Домбай">
+            <div class="cards__descr">
+              <h2 class="cards__title">Домбай</h2>
+              <button class="cards__like"></button>
+              <button class="cards__delete-item"></button>
+            </div>
+          </li>
+          <li class="cards__item">
+            <img class="cards__image" src="./images/img/carach.jpg" alt="Карачаево-Черкесия">
+            <div class="cards__descr">
+              <h2 class="cards__title">Карачаево-Черкесия</h2>
+              <button class="cards__like"></button>
+              <button class="cards__delete-item"></button>
+            </div>
+          </li> -->
+        </ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p class="copy">© 2020 Mesto Russia</p>
+    </footer>
+
+  </div>
+
+  <section class="edit-form">
+    <div class="edit-form__content">
+      <h2 class="edit-form__title">Редактировать профиль</h2>
+      <form class="edit-form__form">
+        <input class='edit-form__name' type="text">
+        <input class='edit-form__desr' type="text">
+        <button class="edit-form__save-button">Сохранить</button>
+      </form>
+      <button class="close-button"></button>
+    </div>
+  </section>
+
+  <section class="new-card">
+    <div class="new-card__content">
+      <h2 class="new-card__title">Новое место</h2>
+      <form class="new-card__form">
+        <input class='new-card__name' type="text">
+        <input class='new-card__link' type="text">
+        <button class="new-card__save-button">Создать</button>
+      </form>
+      <button class="close-button"></button>
+    </div>
+  </section>
+
+  <script src="./index.js"></script>
+</body>
+</html>

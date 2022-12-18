@@ -1,0 +1,50 @@
+@import url(./normalize.css);
+
+@import url(./blocks/body/body.css);
+@import url(./blocks/container/container.css);
+
+@import url(./blocks/header/header.css);
+@import url(./blocks/logo/logo.css);
+
+@import url(./blocks/content/__profile/content__profile.css);
+@import url(./blocks/profile/profile.css);
+@import url(./blocks/profile/__user/profile__user.css);
+@import url(./blocks/profile/__avatar/profile__avatar.css);
+@import url(./blocks/profile/__info/profile__info.css);
+@import url(./blocks/profile/__title/profile__title.css);
+@import url(./blocks/profile/__description/profile__description.css);
+@import url(./blocks/profile/__edit/profile__edit.css);
+@import url(./blocks/profile/__add/pofile__add.css);
+
+
+@import url(./blocks/cards/cards.css);
+@import url(./blocks/places/__cards/places__cards.css);
+@import url(./blocks/cards/__item/cards__item.css);
+@import url(./blocks/cards/__image/cards__image.css);
+@import url(./blocks/cards/__descr/cards__descr.css);
+@import url(./blocks/cards/__title/cards__title.css);
+@import url(./blocks/cards/__like/cards__like.css);
+@import url(./blocks/cards/__liked/cards__liked.css);
+@import url(./blocks/cards/__delete-item/cards__delete-item.css);
+
+@import url(./blocks/copy/copy.css);
+
+@import url(./blocks/edit-form/edit-form.css);
+@import url(./blocks/edit-form/__content/edit-form__content.css);
+@import url(./blocks/edit-form/__title/edit-form__title.css);
+@import url(./blocks/edit-form/__name/edit-form__name.css);
+@import url(./blocks/edit-form/__desr/edit-form__desr.css);
+@import url(./blocks/edit-form/__save-button/dit-form__save-button.css);
+@import url(./blocks/close-button/close-button.css);
+
+@import url(./blocks/new-card/new-card.css);
+@import url(./blocks/new-card/__content/new-card__content.css);
+@import url(./blocks/new-card/__title/new-card__title.css);
+@import url(./blocks/new-card/__name/new-card__name.css);
+@import url(./blocks/new-card/__link/new-card__link.css);
+@import url(./blocks/new-card/__save-button/new-card__save-button.css);
+
+@import url(./blocks/image-popup/image-popup.css);
+@import url(./blocks/image-popup/__wrapper/image-popup__wrapper.css);
+@import url(./blocks/image-popup/__img/image-popup__img.css);
+@import url(./blocks/image-popup/__descr/image-popup__descr.css);
