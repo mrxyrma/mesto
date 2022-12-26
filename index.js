@@ -25,7 +25,23 @@ let initialCards = [
   }
 ];
 const cards = document.querySelector('.cards');
-renderCards();
+
+
+// Изначальная отрисовка карточек
+cards.innerHTML = '';
+initialCards.forEach((item) => {
+  cards.innerHTML += `
+    <li class="cards__item">
+    <img class="cards__image" src=${item.link} alt=${item.name}>
+    <div class="cards__descr">
+      <h2 class="cards__title">${item.name}</h2>
+      <button class="cards__like"></button>
+      <button class="cards__delete-item"></button>
+    </div>
+    </li>
+  `
+});
+
 
 const editBtn = document.querySelector('.profile__edit'),
       closeBtn = document.querySelectorAll('.close-button'),
@@ -41,36 +57,92 @@ let profileName = document.querySelector('.profile__title'),
     newCardName = document.querySelector('.new-card__name'),
     newCardLink = document.querySelector('.new-card__link');
 
+
+//Открытие модального окна для редактирования данных профиля
 editBtn.addEventListener('click', () => {
   inputName.value = profileName.innerText;
   inputDescr.value = profileDescr.innerText;
   document.querySelector('.edit-form').style.display = 'flex';
 });
 
+
+//Закрытие модальных окон
 closeBtn.forEach(closeBtn => closeBtn.addEventListener('click', closeModal));
 
+function closeModal(e) {
+  e.target.closest('section').style.display = 'none';
+  console.log(e);
+}
+
+
+//Отправка данных из модального окна редактирования профиля
 form.addEventListener('submit', formSubmit);
 
+function formSubmit(e) {
+  e.preventDefault();
+  
+  profileName.innerText = inputName.value;
+  profileDescr.innerText = inputDescr.value;
+
+  closeModal(e);
+}
+
+
+//Отображение модального окна для добавления новой карточки
+addCardButton.addEventListener('click', () => {
+  document.querySelector('.new-card').style.display = 'flex';
+});
+
+//Добавление новой карточки на страницу
+addForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (newCardName.value && newCardLink.value) {
+    initialCards.unshift({'name': newCardName.value, 'link': newCardLink.value});
+   
+    cards.insertAdjacentHTML('afterbegin', `
+    <li class="cards__item">
+    <img class="cards__image" src=${newCardLink.value} alt=${newCardName.value}>
+    <div class="cards__descr">
+      <h2 class="cards__title">${newCardName.value}</h2>
+      <button class="cards__like"></button>
+      <button class="cards__delete-item"></button>
+    </div>
+    </li>
+  `);
+
+    closeModal(e);
+
+    newCardName.value = '';
+    newCardLink.value = '';
+  }
+});
+
+
+//Функционал лайка
 cards.addEventListener('click', (e) => {
   if(e.target.className.includes('cards__like')) {
     e.target.classList.toggle('cards__liked');
   }
 });
 
+
+//Удаление карточки
 cards.addEventListener('click', (e) => {
   if (e.target.className == 'cards__delete-item') {
-    initialCards = initialCards.filter(item => {return item.name !== e.path[1].innerText});
-    renderCards();
+    e.target.closest('.cards__item').remove();
   }
 });
 
+
+//Открытие попапа с картинкой крупным планом
 cards.addEventListener('click', (e) => {
   if(e.target.className === 'cards__image') {
+    console.log(e);
     document.querySelector('.footer').insertAdjacentHTML('afterend', `
     <section class="image-popup">
       <div class="image-popup__wrapper">
-        <img class="image-popup__img" src="${e.target.src}" alt="${e.path[1].innerText}">
-        <p class="image-popup__descr">${e.path[1].innerText}</p>
+        <img class="image-popup__img" src="${e.target.src}" alt="${e.target.closest('.cards__item').innerText}">
+        <p class="image-popup__descr">${e.target.closest('.cards__item').innerText}</p>
         <button class="close-button close-popup"></button>
       </div>
     </section>
@@ -83,49 +155,3 @@ cards.addEventListener('click', (e) => {
     })
   }
 });
-
-addCardButton.addEventListener('click', () => {
-  document.querySelector('.new-card').style.display = 'flex';
-});
-
-addForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  if (newCardName.value && newCardLink.value) {
-    initialCards.unshift({'name': newCardName.value, 'link': newCardLink.value});
-    renderCards(initialCards);
-
-    closeModal(e);
-    newCardName.value = '';
-    newCardLink.value = '';
-  }
-});
-
-function closeModal(e) {
-  e.path[2].style.display = 'none';
-  console.log(e);
-}
-
-function formSubmit(event) {
-  event.preventDefault();
-  
-  profileName.innerText = inputName.value;
-  profileDescr.innerText = inputDescr.value;
-
-  closeModal(e);
-}
-
-function renderCards() {
-  cards.innerHTML = '';
-  initialCards.forEach((item) => {
-    cards.innerHTML += `
-      <li class="cards__item">
-      <img class="cards__image" src=${item.link} alt=${item.name}>
-      <div class="cards__descr">
-        <h2 class="cards__title">${item.name}</h2>
-        <button class="cards__like"></button>
-        <button class="cards__delete-item"></button>
-      </div>
-      </li>
-    `
-  });
-}
