@@ -11,7 +11,7 @@
   border: none;
 }
 
-.new-__save-button:hover {
+.new-card__save-button:hover {
   opacity: .8;
   cursor: pointer;
 }
