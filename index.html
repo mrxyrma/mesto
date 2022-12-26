@@ -26,7 +26,7 @@
               <h1 class="profile__title">Жак-Ив Кусто</h1>
               <button class="profile__edit"></button>
             </div>
-            <p class="profile__description">Исследователь океана</p>
+            <p class="profile__descr">Исследователь океана</p>
           </div>
         </div>
         <button class="pofile__add"></button>
@@ -44,25 +44,27 @@
 
   </div>
 
-  <section class="edit-form">
-    <div class="edit-form__content">
-      <h2 class="edit-form__title">Редактировать профиль</h2>
+  <section class="modal__overlay edit-form">
+    <div class="modal__content">
+      <h2 class="modal__title">Редактировать профиль</h2>
       <form class="edit-form__form">
-        <input class='edit-form__name' type="text">
-        <input class='edit-form__desr' type="text">
-        <button class="edit-form__save-button">Сохранить</button>
+        <input class='modal__field edit-form__title' type="text">
+        <input class='modal__field edit-form__desr' type="text">
+        <button class="modal__save-button">Сохранить</button>
       </form>
       <button class="close-button"></button>
     </div>
   </section>
 
-  <section class="new-card">
-    <div class="new-card__content">
-      <h2 class="new-card__title">Новое место</h2>
+  <section class="modal__overlay add-form">
+    <div class="modal__content">
+      <h2 class="modal__title">Новое место</h2>
       <form class="new-card__form">
-        <input class='new-card__name' type="text" placeholder="Название">
-        <input class='new-card__link' type="text" placeholder="Ссылка на картинку">
-        <button class="new-card__save-button">Создать</button>
+        <input class='modal__field' type="text" placeholder="Название">
+        <p class="new-card__name-validation">Вы пропустили это поле</p>
+        <input class='modal__field' type="text" placeholder="Ссылка на картинку">
+        <p class="new-card__link-validation">Введите адрес сайта</p>
+        <button class="modal__save-button">Создать</button>
       </form>
       <button class="close-button"></button>
     </div>

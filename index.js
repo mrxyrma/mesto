@@ -51,18 +51,21 @@ const editBtn = document.querySelector('.profile__edit'),
       addForm = document.querySelector('.new-card__form');
 
 let profileName = document.querySelector('.profile__title'),
-    profileDescr = document.querySelector('.profile__description'),
-    inputName = document.querySelector('.edit-form__name'),
+    profileDescr = document.querySelector('.profile__descr'),
+    inputName = document.querySelector('.edit-form__title'),
     inputDescr = document.querySelector('.edit-form__desr'),
     newCardName = document.querySelector('.new-card__name'),
     newCardLink = document.querySelector('.new-card__link');
 
 
 //Открытие модального окна для редактирования данных профиля
-editBtn.addEventListener('click', () => {
+editBtn.addEventListener('click', (e) => {
   inputName.value = profileName.innerText;
   inputDescr.value = profileDescr.innerText;
   document.querySelector('.edit-form').style.display = 'flex';
+
+  document.addEventListener('keydown', closeByEsc);
+
 });
 
 
@@ -71,7 +74,7 @@ closeBtn.forEach(closeBtn => closeBtn.addEventListener('click', closeModal));
 
 function closeModal(e) {
   e.target.closest('section').style.display = 'none';
-  console.log(e);
+  document.removeEventListener('keydown', closeByEsc);
 }
 
 
@@ -90,8 +93,18 @@ function formSubmit(e) {
 
 //Отображение модального окна для добавления новой карточки
 addCardButton.addEventListener('click', () => {
-  document.querySelector('.new-card').style.display = 'flex';
+  document.querySelector('.add-form').style.display = 'flex';
+
+  document.addEventListener('keydown', closeByEsc);
+
 });
+
+function closeByEsc(e){
+  if (e.key === 'Escape') {
+    console.log('dddd');
+    closeModal(e);
+  }
+}
 
 //Добавление новой карточки на страницу
 addForm.addEventListener('submit', (e) => {
