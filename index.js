@@ -42,15 +42,24 @@ let profileName = document.querySelector('.profile__title'),
     newCardLink = document.querySelector('.new-card__link');
 
 
-//Редактирование данных профиля
+//Открытие модального окна для редактирования данных профиля
 editBtn.addEventListener('click', () => {
   inputName.value = profileName.innerText;
   inputDescr.value = profileDescr.innerText;
   document.querySelector('.edit-form').style.display = 'flex';
 });
 
+
+//Закрытие модальных окон
 closeBtn.forEach(closeBtn => closeBtn.addEventListener('click', closeModal));
 
+function closeModal(event) {
+  event.path[2].style.display = 'none';
+  console.log(event);
+}
+
+
+//Отправка данных из модального окна редактирования профиля
 form.addEventListener('submit', formSubmit);
 
 function formSubmit(event) {
@@ -62,26 +71,42 @@ function formSubmit(event) {
   closeModal(event);
 }
 
-function closeModal(event) {
-  event.path[2].style.display = 'none';
-  console.log(event);
-}
+
+//Отображение модального окна для добавления новой карточки
+addCardButton.addEventListener('click', () => {
+  document.querySelector('.new-card').style.display = 'flex';
+});
+
+addForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (newCardName.value && newCardLink.value) {
+    initialCards.unshift({'name': newCardName.value, 'link': newCardLink.value});
+    renderCards(initialCards);
+
+    closeModal(e);
+    newCardName.value = '';
+    newCardLink.value = '';
+  }
+});
 
 
-
+//Функционал лайка
 cards.addEventListener('click', (e) => {
   if(e.target.className.includes('cards__like')) {
     e.target.classList.toggle('cards__liked');
   }
 });
 
+
+//Удаление карточки
 cards.addEventListener('click', (e) => {
   if (e.target.className == 'cards__delete-item') {
-    initialCards = initialCards.filter(item => {return item.name !== e.path[1].innerText});
-    renderCards();
+    e.target.closest('.cards__item').remove();
   }
 });
 
+
+//Открытие попапа с картинкой крупным планом
 cards.addEventListener('click', (e) => {
   if(e.target.className === 'cards__image') {
     document.querySelector('.footer').insertAdjacentHTML('afterend', `
@@ -101,23 +126,6 @@ cards.addEventListener('click', (e) => {
     })
   }
 });
-
-addCardButton.addEventListener('click', () => {
-  document.querySelector('.new-card').style.display = 'flex';
-});
-
-addForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  if (newCardName.value && newCardLink.value) {
-    initialCards.unshift({'name': newCardName.value, 'link': newCardLink.value});
-    renderCards(initialCards);
-
-    closeModal(e);
-    newCardName.value = '';
-    newCardLink.value = '';
-  }
-});
-
 
 
 // Изначальная отрисовка карточек
