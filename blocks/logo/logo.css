@@ -1,4 +1,6 @@
 .logo {
   max-width: 142px;
-  max-height: 33px;
+  max-height: 34px;
+  object-fit: contain;
+  margin-left: 3px;
 }

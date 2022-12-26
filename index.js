@@ -29,8 +29,8 @@ renderCards();
 
 const editBtn = document.querySelector('.profile__edit'),
       closeBtn = document.querySelectorAll('.close-button'),
-      form = document.querySelector('.edit-form__form'),
-      cardsTitle = document.querySelectorAll('.cards__title'),
+      form = document.querySelector('.edit-form__form'), //форма редактирования профиля
+      cardsTitle = document.querySelectorAll('.cards__title'), //
       addCardButton = document.querySelector('.pofile__add'),
       addForm = document.querySelector('.new-card__form');
 
@@ -41,6 +41,8 @@ let profileName = document.querySelector('.profile__title'),
     newCardName = document.querySelector('.new-card__name'),
     newCardLink = document.querySelector('.new-card__link');
 
+
+//Редактирование данных профиля
 editBtn.addEventListener('click', () => {
   inputName.value = profileName.innerText;
   inputDescr.value = profileDescr.innerText;
@@ -50,6 +52,22 @@ editBtn.addEventListener('click', () => {
 closeBtn.forEach(closeBtn => closeBtn.addEventListener('click', closeModal));
 
 form.addEventListener('submit', formSubmit);
+
+function formSubmit(event) {
+  event.preventDefault();
+  
+  profileName.innerText = inputName.value;
+  profileDescr.innerText = inputDescr.value;
+
+  closeModal(event);
+}
+
+function closeModal(event) {
+  event.path[2].style.display = 'none';
+  console.log(event);
+}
+
+
 
 cards.addEventListener('click', (e) => {
   if(e.target.className.includes('cards__like')) {
@@ -100,20 +118,9 @@ addForm.addEventListener('submit', (e) => {
   }
 });
 
-function closeModal(e) {
-  e.path[2].style.display = 'none';
-  console.log(e);
-}
 
-function formSubmit(event) {
-  event.preventDefault();
-  
-  profileName.innerText = inputName.value;
-  profileDescr.innerText = inputDescr.value;
 
-  closeModal(e);
-}
-
+// Изначальная отрисовка карточек
 function renderCards() {
   cards.innerHTML = '';
   initialCards.forEach((item) => {
