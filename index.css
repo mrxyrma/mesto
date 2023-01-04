@@ -36,6 +36,7 @@
 @import url(./blocks/modal/__field/modal__field.css);
 @import url(./blocks/modal/__field/_error/modal__field_error.css);
 @import url(./blocks/modal/__save-button/modal__save-button.css);
+@import url(./blocks/modal/__save-button/_inactive/modal__save-button_inactive.css);
 @import url(./blocks/modal/__error/modal__error.css);
 
 @import url(./blocks/close-button/close-button.css);

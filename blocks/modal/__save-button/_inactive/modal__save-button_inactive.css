@@ -1,0 +1,11 @@
+.modal__save-button_inactive {
+  opacity: .2;
+  color: #000;
+  border: 1px solid #000;
+  background-color: transparent;
+}
+
+.modal__save-button_inactive:hover {
+  opacity: .2;
+  cursor: auto;
+}

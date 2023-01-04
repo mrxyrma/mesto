@@ -150,7 +150,6 @@ cards.addEventListener('click', (e) => {
 //Открытие попапа с картинкой крупным планом
 cards.addEventListener('click', (e) => {
   if(e.target.className === 'cards__image') {
-    console.log(e);
     document.querySelector('.footer').insertAdjacentHTML('afterend', `
     <section class="image-popup">
       <div class="image-popup__wrapper">
@@ -192,10 +191,15 @@ function isValid(formElement, inputElement) {
 }
 
 function setEventListeners(formElement) {
-  const inputList = formElement.querySelectorAll('.modal__field');
+  const inputList = Array.from(formElement.querySelectorAll('.modal__field'));
+  const buttonElement = formElement.querySelector('.modal__save-button');
+
+  toggleButtonState(inputList, buttonElement);
+
   inputList.forEach(inputElement => {
     inputElement.addEventListener('input', () => {
       isValid(formElement, inputElement);
+      toggleButtonState(inputList, buttonElement);
     });
   });
 }
@@ -207,4 +211,20 @@ function enableValidation() {
   });
 }
 
-enableValidation(); 
+enableValidation();
+
+
+//Блокировка кнопки
+function hasInvalidInput(inputList) {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  });
+}
+
+function toggleButtonState(inputList, buttonElement) {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.classList.add('modal__save-button_inactive');
+  } else {
+    buttonElement.classList.remove('modal__save-button_inactive');
+  }
+}
