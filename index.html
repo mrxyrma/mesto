@@ -53,13 +53,13 @@
           required
           minlength="2"
           maxlength="40">
-          <span class="edit-form__title-error"></span>
+          <div class="edit-form__title-error modal__error"></div>
         <input class='modal__field' id="edit-form__descr"
           type="text"
           required
           minlength="2"
           maxlength="200">
-          <span class="edit-form__descr-error"></span>
+          <div class="edit-form__descr-error modal__error"></div>
         <button class="modal__save-button">Сохранить</button>
       </form>
       <button class="close-button"></button>
@@ -76,12 +76,12 @@
           minlength="2"
           maxlength="30"
           placeholder="Название">
-        <span class="new-card__name-error"></span>
+        <div class="new-card__name-error modal__error"></div>
         <input class='modal__field' id="new-card__link"
           type="url"
           required
           placeholder="Ссылка на картинку">
-        <span class="new-card__link-error"></span>
+        <div class="new-card__link-error modal__error"></div>
         <button class="modal__save-button">Создать</button>
       </form>
       <button class="close-button"></button>

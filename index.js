@@ -168,3 +168,43 @@ cards.addEventListener('click', (e) => {
     })
   }
 });
+
+
+//Валидация форм
+function showInputError(formElement, inputElement, errorMessage) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add('modal__field_error');
+  errorElement.textContent = errorMessage;
+}
+
+function hideInputError(formElement, inputElement) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove('modal__field_error');
+  errorElement.textContent = '';
+}
+
+function isValid(formElement, inputElement) {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideInputError(formElement, inputElement);
+  }
+}
+
+function setEventListeners(formElement) {
+  const inputList = formElement.querySelectorAll('.modal__field');
+  inputList.forEach(inputElement => {
+    inputElement.addEventListener('input', () => {
+      isValid(formElement, inputElement);
+    });
+  });
+}
+
+function enableValidation() {
+  const formList = Array.from(document.getElementsByTagName('form'));
+  formList.forEach(formElement => {
+    setEventListeners(formElement);
+  });
+}
+
+enableValidation(); 

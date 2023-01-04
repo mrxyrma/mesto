@@ -34,7 +34,9 @@
 @import url(./blocks/modal/__content/modal__content.css);
 @import url(./blocks/modal/__title/modal__title.css);
 @import url(./blocks/modal/__field/modal__field.css);
+@import url(./blocks/modal/__field/_error/modal__field_error.css);
 @import url(./blocks/modal/__save-button/modal__save-button.css);
+@import url(./blocks/modal/__error/modal__error.css);
 
 @import url(./blocks/close-button/close-button.css);
 
@@ -43,18 +45,3 @@
 @import url(./blocks/image-popup/__img/image-popup__img.css);
 @import url(./blocks/image-popup/__descr/image-popup__descr.css);
 
-.new-card__name-validation {
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 15px;
-  color: #FF0000;
-  margin: 0;
-}
-
-.new-card__link-validation {
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 15px;
-  color: #FF0000;
-  margin: 0;
-}
