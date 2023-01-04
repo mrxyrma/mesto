@@ -52,10 +52,10 @@ const editBtn = document.querySelector('.profile__edit'),
 
 let profileName = document.querySelector('.profile__title'),
     profileDescr = document.querySelector('.profile__descr'),
-    inputName = document.querySelector('.edit-form__title'),
-    inputDescr = document.querySelector('.edit-form__desr'),
-    newCardName = document.querySelector('.new-card__name'),
-    newCardLink = document.querySelector('.new-card__link');
+    inputName = document.querySelector('#edit-form__title'),
+    inputDescr = document.querySelector('#edit-form__descr'),
+    newCardName = document.querySelector('#new-card__name'),
+    newCardLink = document.querySelector('#new-card__link');
 
 
 //Открытие модального окна для редактирования данных профиля

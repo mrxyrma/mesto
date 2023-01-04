@@ -47,9 +47,19 @@
   <section class="modal__overlay edit-form">
     <div class="modal__content">
       <h2 class="modal__title">Редактировать профиль</h2>
-      <form class="edit-form__form">
-        <input class='modal__field edit-form__title' type="text">
-        <input class='modal__field edit-form__desr' type="text">
+      <form class="edit-form__form" novalidate>
+        <input class='modal__field' id="edit-form__title"
+          type="text" 
+          required
+          minlength="2"
+          maxlength="40">
+          <span class="edit-form__title-error"></span>
+        <input class='modal__field' id="edit-form__descr"
+          type="text"
+          required
+          minlength="2"
+          maxlength="200">
+          <span class="edit-form__descr-error"></span>
         <button class="modal__save-button">Сохранить</button>
       </form>
       <button class="close-button"></button>
@@ -59,11 +69,19 @@
   <section class="modal__overlay add-form">
     <div class="modal__content">
       <h2 class="modal__title">Новое место</h2>
-      <form class="new-card__form">
-        <input class='modal__field' type="text" placeholder="Название">
-        <p class="new-card__name-validation">Вы пропустили это поле</p>
-        <input class='modal__field' type="text" placeholder="Ссылка на картинку">
-        <p class="new-card__link-validation">Введите адрес сайта</p>
+      <form class="new-card__form" novalidate>
+        <input class='modal__field' id="new-card__name"
+          type="text"
+          required
+          minlength="2"
+          maxlength="30"
+          placeholder="Название">
+        <span class="new-card__name-error"></span>
+        <input class='modal__field' id="new-card__link"
+          type="url"
+          required
+          placeholder="Ссылка на картинку">
+        <span class="new-card__link-error"></span>
         <button class="modal__save-button">Создать</button>
       </form>
       <button class="close-button"></button>
