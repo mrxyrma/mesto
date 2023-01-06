@@ -45,7 +45,7 @@ initialCards.forEach((item) => {
 
 const editBtn = document.querySelector('.profile__edit'),
       closeBtn = document.querySelectorAll('.close-button'),
-      form = document.querySelector('.edit-form__form'),
+      editForm = document.querySelector('.edit-form__form'),
       cardsTitle = document.querySelectorAll('.cards__title'),
       addCardButton = document.querySelector('.pofile__add'),
       addForm = document.querySelector('.new-card__form'),
@@ -60,12 +60,12 @@ let profileName = document.querySelector('.profile__title'),
 
 
 //Открытие модального окна для редактирования данных профиля
-editBtn.addEventListener('click', (e) => {
+editBtn.addEventListener('click', () => {
   inputName.value = profileName.innerText;
   inputDescr.value = profileDescr.innerText;
+  editForm.querySelector('.modal__save-button').classList.add('modal__save-button_inactive');
   document.querySelector('.edit-form').classList.add('modal__open');
   document.addEventListener('keydown', closeByEsc);
-
 });
 
 
@@ -94,28 +94,27 @@ modalOverlay.forEach(item => {
 
 
 //Отправка данных из модального окна редактирования профиля
-form.addEventListener('submit', formSubmit);
-
-function formSubmit(e) {
+editForm.addEventListener('submit', e => {
   e.preventDefault();
-  
-  profileName.innerText = inputName.value;
-  profileDescr.innerText = inputDescr.value;
 
-  closeModal();
-}
+  if (inputName.value !== profileName.innerText || inputDescr.value !== profileDescr.innerText) {
+    profileName.innerText = inputName.value;
+    profileDescr.innerText = inputDescr.value;
+    closeModal();
+  }
+});
 
 
 //Отображение модального окна для добавления новой карточки
 addCardButton.addEventListener('click', () => {
+  addForm.querySelector('.modal__save-button').classList.add('modal__save-button_inactive');
   document.querySelector('.add-form').classList.add('modal__open');
   document.addEventListener('keydown', closeByEsc);
-
 });
 
 
 //Добавление новой карточки на страницу
-addForm.addEventListener('submit', (e) => {
+addForm.addEventListener('submit', e => {
   e.preventDefault();
   if (newCardName.value && newCardLink.value) {
     initialCards.unshift({'name': newCardName.value, 'link': newCardLink.value});
@@ -140,7 +139,7 @@ addForm.addEventListener('submit', (e) => {
 
 
 //Функционал лайка
-cards.addEventListener('click', (e) => {
+cards.addEventListener('click', e => {
   if(e.target.className.includes('cards__like')) {
     e.target.classList.toggle('cards__liked');
   }
@@ -148,7 +147,7 @@ cards.addEventListener('click', (e) => {
 
 
 //Удаление карточки
-cards.addEventListener('click', (e) => {
+cards.addEventListener('click', e => {
   if (e.target.className == 'cards__delete-item') {
     e.target.closest('.cards__item').remove();
   }
@@ -156,7 +155,7 @@ cards.addEventListener('click', (e) => {
 
 
 //Открытие попапа с картинкой крупным планом
-cards.addEventListener('click', (e) => {
+cards.addEventListener('click', e => {
   if(e.target.className === 'cards__image') {
     document.querySelector('.footer').insertAdjacentHTML('afterend', `
     <section class="image-popup modal__open">
