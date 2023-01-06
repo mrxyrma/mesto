@@ -48,7 +48,8 @@ const editBtn = document.querySelector('.profile__edit'),
       form = document.querySelector('.edit-form__form'),
       cardsTitle = document.querySelectorAll('.cards__title'),
       addCardButton = document.querySelector('.pofile__add'),
-      addForm = document.querySelector('.new-card__form');
+      addForm = document.querySelector('.new-card__form'),
+      modalOverlay = document.querySelectorAll('.modal__overlay');
 
 let profileName = document.querySelector('.profile__title'),
     profileDescr = document.querySelector('.profile__descr'),
@@ -62,8 +63,7 @@ let profileName = document.querySelector('.profile__title'),
 editBtn.addEventListener('click', (e) => {
   inputName.value = profileName.innerText;
   inputDescr.value = profileDescr.innerText;
-  document.querySelector('.edit-form').style.display = 'flex';
-
+  document.querySelector('.edit-form').classList.add('modal__open');
   document.addEventListener('keydown', closeByEsc);
 
 });
@@ -72,10 +72,25 @@ editBtn.addEventListener('click', (e) => {
 //Закрытие модальных окон
 closeBtn.forEach(closeBtn => closeBtn.addEventListener('click', closeModal));
 
-function closeModal(e) {
-  e.target.closest('section').style.display = 'none';
+function closeModal() {
+  document.querySelector('.modal__open').classList.remove('modal__open');
   document.removeEventListener('keydown', closeByEsc);
 }
+
+function closeByEsc(e){
+  if (e.key === 'Escape') {
+    closeModal();
+  }
+}
+
+modalOverlay.forEach(item => {
+  item.addEventListener('click', e => {
+    if(e.target == e.currentTarget) {
+      closeModal();
+    }
+  });
+  }
+ );
 
 
 //Отправка данных из модального окна редактирования профиля
@@ -87,24 +102,17 @@ function formSubmit(e) {
   profileName.innerText = inputName.value;
   profileDescr.innerText = inputDescr.value;
 
-  closeModal(e);
+  closeModal();
 }
 
 
 //Отображение модального окна для добавления новой карточки
 addCardButton.addEventListener('click', () => {
-  document.querySelector('.add-form').style.display = 'flex';
-
+  document.querySelector('.add-form').classList.add('modal__open');
   document.addEventListener('keydown', closeByEsc);
 
 });
 
-function closeByEsc(e){
-  if (e.key === 'Escape') {
-    console.log('dddd');
-    closeModal(e);
-  }
-}
 
 //Добавление новой карточки на страницу
 addForm.addEventListener('submit', (e) => {
@@ -151,7 +159,7 @@ cards.addEventListener('click', (e) => {
 cards.addEventListener('click', (e) => {
   if(e.target.className === 'cards__image') {
     document.querySelector('.footer').insertAdjacentHTML('afterend', `
-    <section class="image-popup">
+    <section class="image-popup modal__open">
       <div class="image-popup__wrapper">
         <img class="image-popup__img" src="${e.target.src}" alt="${e.target.closest('.cards__item').innerText}">
         <p class="image-popup__descr">${e.target.closest('.cards__item').innerText}</p>
@@ -165,6 +173,21 @@ cards.addEventListener('click', (e) => {
     closePopup.addEventListener('click', () => {
       popupWindow.remove();
     })
+  
+    function removePopupByEsc(e) {
+      if (e.key === 'Escape') {
+        popupWindow.remove();
+        document.removeEventListener('keydown', removePopupByEsc);
+      }
+    }
+
+    document.addEventListener('keydown', removePopupByEsc);
+
+    popupWindow.addEventListener('click', e => {
+      if(e.target == e.currentTarget) {
+        popupWindow.remove();
+      }
+    });
   }
 });
 
