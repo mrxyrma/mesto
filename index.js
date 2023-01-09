@@ -117,18 +117,7 @@ addCardButton.addEventListener('click', () => {
 addForm.addEventListener('submit', e => {
   e.preventDefault();
   if (newCardName.value && newCardLink.value) {
-    initialCards.unshift({'name': newCardName.value, 'link': newCardLink.value});
-   
-    cards.insertAdjacentHTML('afterbegin', `
-    <li class="cards__item">
-    <img class="cards__image" src=${newCardLink.value} alt=${newCardName.value}>
-    <div class="cards__descr">
-      <h2 class="cards__title">${newCardName.value}</h2>
-      <button class="cards__like"></button>
-      <button class="cards__delete-item"></button>
-    </div>
-    </li>
-  `);
+    new Card(newCardName.value, newCardLink.value, cards).addCard();
 
     closeModal();
 
@@ -250,3 +239,29 @@ function toggleButtonState(inputList, buttonElement) {
     buttonElement.classList.remove('modal__save-button_inactive');
   }
 }
+
+
+//Класс карточки
+class Card {
+  constructor(title, url, template) {
+    this.title = title;
+    this.url = url;
+    this.template = template;
+  }
+
+  addCard() {
+    initialCards.unshift({'name': this.title, 'link': this.url});
+    
+    this.template.insertAdjacentHTML('afterbegin', `
+    <li class="cards__item">
+    <img class="cards__image" src=${this.url} alt=${this.title}>
+    <div class="cards__descr">
+      <h2 class="cards__title">${this.title}</h2>
+      <button class="cards__like"></button>
+      <button class="cards__delete-item"></button>
+    </div>
+    </li>`);
+  }
+  
+}
+
