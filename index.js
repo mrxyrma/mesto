@@ -1,46 +1,112 @@
 let initialCards = [
   {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    title: 'Архыз',
+    url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
   },
   {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    title: 'Челябинская область',
+    url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
   },
   {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    title: 'Иваново',
+    url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
   },
   {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    title: 'Камчатка',
+    url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
   },
   {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    title: 'Холмогорский район',
+    url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
   },
   {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    title: 'Байкал',
+    url: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
 const cards = document.querySelector('.cards');
 
+//Класс карточки
+class Card {
+  constructor(title, url, template) {
+    this.title = title;
+    this.url = url;
+    this.template = template;
+  }
 
-// Изначальная отрисовка карточек
-cards.innerHTML = '';
-initialCards.forEach((item) => {
-  cards.innerHTML += `
+  _murkup() {
+    this.template.insertAdjacentHTML('afterbegin', `
     <li class="cards__item">
-    <img class="cards__image" src=${item.link} alt=${item.name}>
+    <img class="cards__image" src=${this.url} alt=${this.title}>
     <div class="cards__descr">
-      <h2 class="cards__title">${item.name}</h2>
+      <h2 class="cards__title">${this.title}</h2>
       <button class="cards__like"></button>
       <button class="cards__delete-item"></button>
     </div>
-    </li>
-  `
-});
+    </li>`);
+  }
+
+  _likeCard() {
+    document.querySelector('.cards__like').addEventListener('click', e => {
+      if(e.target.className.includes('cards__like')) {
+        e.target.classList.toggle('cards__liked');
+      }
+    });
+  }
+
+  _deleteCard() {
+    document.querySelector('.cards__delete-item').addEventListener('click', e => {
+      e.target.closest('.cards__item').remove();
+    });
+  }
+
+  _popup() {
+    document.querySelector('.cards__image').addEventListener('click', e => {
+      if(e.currentTarget.className === 'cards__image') {
+        document.querySelector('.footer').insertAdjacentHTML('afterend', `
+        <section class="image-popup modal__open">
+          <div class="image-popup__wrapper">
+            <img class="image-popup__img" src="${e.currentTarget.src}" alt="${e.currentTarget.closest('.cards__item').innerText}">
+            <p class="image-popup__descr">${e.currentTarget.closest('.cards__item').innerText}</p>
+            <button class="close-button close-popup"></button>
+          </div>
+        </section>`);
+
+        const popupWindow = document.querySelector('.image-popup');
+    
+        document.querySelector('.close-popup').addEventListener('click', () => {
+          popupWindow.remove();
+        })
+      
+        function removePopupByEsc(e) {
+          if (e.key === 'Escape') {
+            popupWindow.remove();
+            document.removeEventListener('keydown', removePopupByEsc);
+          }
+        }
+    
+        document.addEventListener('keydown', removePopupByEsc);
+    
+        popupWindow.addEventListener('click', e => {
+          if(e.target == e.currentTarget) {
+            popupWindow.remove();
+            document.removeEventListener('keydown', removePopupByEsc);
+          }
+        });
+      }
+    });
+  }  
+
+  addCard() {
+    this._murkup();
+    this._likeCard();
+    this._deleteCard();
+    this._popup();
+  } 
+}
+
+// Изначальная отрисовка карточек
+initialCards.forEach(item => new Card(item.title, item.url, cards).addCard());
 
 
 const editBtn = document.querySelector('.profile__edit'),
@@ -117,65 +183,13 @@ addCardButton.addEventListener('click', () => {
 addForm.addEventListener('submit', e => {
   e.preventDefault();
   if (newCardName.value && newCardLink.value) {
+    initialCards.unshift({'title': newCardName.value, 'url': newCardLink.value});
     new Card(newCardName.value, newCardLink.value, cards).addCard();
 
     closeModal();
 
     newCardName.value = '';
     newCardLink.value = '';
-  }
-});
-
-
-//Функционал лайка
-cards.addEventListener('click', e => {
-  if(e.target.className.includes('cards__like')) {
-    e.target.classList.toggle('cards__liked');
-  }
-});
-
-
-//Удаление карточки
-cards.addEventListener('click', e => {
-  if (e.target.className == 'cards__delete-item') {
-    e.target.closest('.cards__item').remove();
-  }
-});
-
-
-//Открытие попапа с картинкой крупным планом
-cards.addEventListener('click', e => {
-  if(e.target.className === 'cards__image') {
-    document.querySelector('.footer').insertAdjacentHTML('afterend', `
-    <section class="image-popup modal__open">
-      <div class="image-popup__wrapper">
-        <img class="image-popup__img" src="${e.target.src}" alt="${e.target.closest('.cards__item').innerText}">
-        <p class="image-popup__descr">${e.target.closest('.cards__item').innerText}</p>
-        <button class="close-button close-popup"></button>
-      </div>
-    </section>
-  `);
-    const closePopup = document.querySelector('.close-popup'),
-          popupWindow = document.querySelector('.image-popup');
-
-    closePopup.addEventListener('click', () => {
-      popupWindow.remove();
-    })
-  
-    function removePopupByEsc(e) {
-      if (e.key === 'Escape') {
-        popupWindow.remove();
-        document.removeEventListener('keydown', removePopupByEsc);
-      }
-    }
-
-    document.addEventListener('keydown', removePopupByEsc);
-
-    popupWindow.addEventListener('click', e => {
-      if(e.target == e.currentTarget) {
-        popupWindow.remove();
-      }
-    });
   }
 });
 
@@ -239,29 +253,3 @@ function toggleButtonState(inputList, buttonElement) {
     buttonElement.classList.remove('modal__save-button_inactive');
   }
 }
-
-
-//Класс карточки
-class Card {
-  constructor(title, url, template) {
-    this.title = title;
-    this.url = url;
-    this.template = template;
-  }
-
-  addCard() {
-    initialCards.unshift({'name': this.title, 'link': this.url});
-    
-    this.template.insertAdjacentHTML('afterbegin', `
-    <li class="cards__item">
-    <img class="cards__image" src=${this.url} alt=${this.title}>
-    <div class="cards__descr">
-      <h2 class="cards__title">${this.title}</h2>
-      <button class="cards__like"></button>
-      <button class="cards__delete-item"></button>
-    </div>
-    </li>`);
-  }
-  
-}
-
