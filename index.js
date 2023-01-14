@@ -156,14 +156,15 @@ modalOverlay.forEach(item => {
     }
   });
   }
- );
+);
 
 
 //Отправка данных из модального окна редактирования профиля
 editForm.addEventListener('submit', e => {
   e.preventDefault();
 
-  if (inputName.value !== profileName.innerText || inputDescr.value !== profileDescr.innerText) {
+  if ((inputName.value !== profileName.innerText || inputDescr.value !== profileDescr.innerText) &&
+      inputName.validity.valid && inputDescr.validity.valid) {
     profileName.innerText = inputName.value;
     profileDescr.innerText = inputDescr.value;
     closeModal();
@@ -195,61 +196,64 @@ addForm.addEventListener('submit', e => {
 
 
 //Валидация форм
-function showInputError(formElement, inputElement, errorMessage) {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add('modal__field_error');
-  errorElement.textContent = errorMessage;
-}
-
-function hideInputError(formElement, inputElement) {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove('modal__field_error');
-  errorElement.textContent = '';
-}
-
-function isValid(formElement, inputElement) {
-  if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
-  } else {
-    hideInputError(formElement, inputElement);
+class FormValidation {
+  constructor(formElement) {
+    this.formElement = formElement;
   }
-}
 
-function setEventListeners(formElement) {
-  const inputList = Array.from(formElement.querySelectorAll('.modal__field'));
-  const buttonElement = formElement.querySelector('.modal__save-button');
+  //Показ сообщения ошибки
+  _showInputError(formElement, inputElement, errorMessage) {
+    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.add('modal__field_error');
+    errorElement.textContent = errorMessage;
+  }
 
-  toggleButtonState(inputList, buttonElement);
+  //Удаление сообщения ошибки
+  _hideInputError(formElement, inputElement) {
+    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.remove('modal__field_error');
+    errorElement.textContent = '';
+  }
 
-  inputList.forEach(inputElement => {
-    inputElement.addEventListener('input', () => {
-      isValid(formElement, inputElement);
-      toggleButtonState(inputList, buttonElement);
+  //Проверка на валидность
+  _isValid(formElement, inputElement) {
+    if (!inputElement.validity.valid) {
+      this._showInputError(formElement, inputElement, inputElement.validationMessage);
+    } else {
+      this._hideInputError(formElement, inputElement);
+    }
+  }
+
+  //Блокировка кнопки
+  _hasInvalidInput(inputList) {
+    return inputList.some((inputElement) => {
+      return !inputElement.validity.valid;
     });
-  });
-}
+  }
 
-function enableValidation() {
-  const formList = Array.from(document.getElementsByTagName('form'));
-  formList.forEach(formElement => {
-    setEventListeners(formElement);
-  });
-}
-
-enableValidation();
-
-
-//Блокировка кнопки
-function hasInvalidInput(inputList) {
-  return inputList.some((inputElement) => {
-    return !inputElement.validity.valid;
-  });
-}
-
-function toggleButtonState(inputList, buttonElement) {
-  if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add('modal__save-button_inactive');
-  } else {
-    buttonElement.classList.remove('modal__save-button_inactive');
+  _toggleButtonState(inputList, buttonElement) {
+    if (this._hasInvalidInput(inputList)) {
+      buttonElement.classList.add('modal__save-button_inactive');
+    } else {
+      buttonElement.classList.remove('modal__save-button_inactive');
+    }
+  }
+  
+  enableValidation() {
+    const inputList = Array.from(this.formElement.querySelectorAll('.modal__field'));
+    const buttonElement = this.formElement.querySelector('.modal__save-button');
+  
+    this._toggleButtonState(inputList, buttonElement);
+  
+    inputList.forEach(inputElement => {
+      inputElement.addEventListener('input', () => {
+        this._isValid(this.formElement, inputElement);
+        this._toggleButtonState(inputList, buttonElement);
+      });
+    });
   }
 }
+
+//Навешивание валидации на все формы на странице
+const formList = Array.from(document.getElementsByTagName('form'));
+formList.forEach(formElement => new FormValidation(formElement).enableValidation());
